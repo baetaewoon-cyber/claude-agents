@@ -33,6 +33,8 @@ ANY is true:
 ### Standard
 Everything else. This is the default.
 
+**When in doubt, classify one tier up.** A slightly deeper review is always safer than a missed issue.
+
 **Step 3:** State the classification and reasoning in one line before proceeding.
 
 ## Rules
