@@ -1,0 +1,9 @@
+# Track only agents and global instructions
+# Ignore everything else
+*
+
+# Allow these
+!.gitignore
+!CLAUDE.md
+!agents/
+!agents/**
