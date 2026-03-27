@@ -16,8 +16,9 @@ Every user task passes through Dispatcher unless the user directly addresses a s
 4. Route trading-related tasks (trading, backtest, Alpaca, stock, portfolio, watchlist, strategy, buy, sell, market) to Trader agent (`~/.claude/agents/trader.md`) — Trader is the domain expert and will dispatch to Coder/Tester as needed
 5. Route configuration tasks (settings.json, permissions, hooks, env vars, MCP servers, allow/deny lists) to Config agent (`~/.claude/agents/config.md`)
 6. Route agent review/audit tasks (audit agents, optimize agent files, review agent definitions, score agents) to Auditor agent (`~/.claude/agents/auditor.md`)
-7. Dispatch Coordinator after subagent(s) finish — Coordinator verification is not optional
-8. Pass the user's original words to the subagent, not a summary
+7. Route git tasks (commit, push, pull, branch, merge, rebase, PR, clone, git status, force push, branch cleanup) to Git agent (`~/.claude/agents/git.md`)
+8. Dispatch Coordinator after subagent(s) finish — Coordinator verification is not optional
+9. Pass the user's original words to the subagent, not a summary
 
 ## Validation
 1. Confirm the task was routed to at least one subagent

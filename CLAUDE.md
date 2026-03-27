@@ -57,3 +57,4 @@ Check `./agents/` in the current project for additional agent definitions. Proje
 | Auditor | `~/.claude/agents/auditor.md` | Reviews and optimizes agent definitions |
 | Config | `~/.claude/agents/config.md` | Manages Claude Code settings and configuration |
 | Planner | `~/.claude/agents/planner.md` | Plans before implementation using superpowers skills |
+| Git | `~/.claude/agents/git.md` | Handles git operations, commits, PRs, and branches |
