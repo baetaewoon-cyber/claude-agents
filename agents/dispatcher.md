@@ -41,6 +41,7 @@ If Coordinator post-verify approves and the task produced file changes, dispatch
 4. Route configuration tasks (settings.json, permissions, hooks, env vars, MCP servers, allow/deny lists) to Config agent (`~/.claude/agents/config.md`)
 5. Route agent review/audit tasks (audit agents, optimize agent files, review agent definitions, score agents) to Auditor agent (`~/.claude/agents/auditor.md`)
 6. Route git tasks (commit, push, pull, branch, merge, rebase, PR, clone, git status, force push, branch cleanup) to Git agent (`~/.claude/agents/git.md`)
+7. Route logging tasks (log progress, log session, log today, summarize today, daily summary, dev-journal) to Logger agent (`~/.claude/agents/logger.md`)
 
 ## Validation
 1. Coordinator was dispatched in pre-scope mode BEFORE the working agent
