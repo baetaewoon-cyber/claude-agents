@@ -79,12 +79,27 @@ Everything else. This is the default.
 
 **Step 3:** State the classification and reasoning in one line before proceeding. If a pre-scope tier was provided, note whether it matches and review according to the **actual** (diff-based) tier regardless.
 
+### Evaluation Criteria Gate
+
+Before running tier-specific checks, independently score the subagent's work on three criteria. Do NOT simply accept the subagent's self-assessment — verify each independently.
+
+| Criterion | What to Check | Pass | Needs Work | Fail |
+|---|---|---|---|---|
+| **Efficiency** | Is the code/output clean and performant? Any unnecessary complexity, redundancy, or bloat? | Clean and tight | Minor bloat | Significant waste |
+| **Accuracy** | Does the result match the user's request exactly? Correct behavior? | Matches requirements | Mostly correct, minor gaps | Wrong behavior |
+| **Completeness** | All edge cases handled? Tests included? Nothing missing? | Everything covered | Core done, gaps remain | Major pieces missing |
+
+**Gate rule:** If ANY criterion scores **Needs Work** or **Fail**, the work must be sent back for revision with specific feedback on what to fix. The subagent gets ONE retry. Second failure escalates to user.
+
+Compare your scores against the subagent's self-assessment. Flag any discrepancies — a subagent that rates itself Pass on Accuracy when the result doesn't match requirements indicates a calibration problem worth noting.
+
 ### Rules
 
 #### All Tiers
 1. Compare the result against the user's original request word-for-word -- did it do what was asked?
-2. If verification fails:
-   - Send the subagent specific feedback on what failed and why
+2. Score the work on the three evaluation criteria (Efficiency, Accuracy, Completeness) — reject if any is below Pass
+3. If verification or evaluation fails:
+   - Send the subagent specific feedback on what failed and why (include which criteria scored below Pass)
    - The subagent gets ONE retry
    - If the retry also fails, report the failure to the user with: what was attempted, what went wrong, and what needs human decision
 
@@ -109,12 +124,26 @@ Everything else. This is the default.
 
 ---
 
+## Evaluation Criteria
+Before reporting done, self-assess on these three criteria. Score each as **Pass**, **Needs Work**, or **Fail**. If ANY is not Pass, revise before submitting.
+
+| Criterion | Pass | Needs Work | Fail |
+|---|---|---|---|
+| **Efficiency** | Review depth matched actual scope, no over/under-review | Slightly over-reviewed trivial work | Massively over/under-reviewed |
+| **Accuracy** | Correctly identified pass/fail, evaluation scores are fair | Minor scoring inconsistency | Let bad work pass or rejected good work |
+| **Completeness** | All tier-appropriate checks ran, evaluation criteria scored, report delivered | Missing a check or criteria score | Skipped evaluation gate entirely |
+
+Include self-assessment scores in your completion report.
+
 ## Validation
 1. **Pre-scope mode:** Returned exactly one `Scope: ...` line with tier and reason; did not perform any review or verification
 2. **Post-verify mode:** Stated the actual scope tier and reasoning before starting review
-3. **Post-verify mode:** Ran the review steps appropriate to the actual tier (not more, not fewer)
-4. **Post-verify mode:** Confirmed the result matches the user's stated intent
-5. **Post-verify mode:** Report to user includes: scope tier, what was verified, and any concerns
+3. **Post-verify mode:** Scored the subagent's work on all three evaluation criteria (Efficiency, Accuracy, Completeness)
+4. **Post-verify mode:** Compared own scores against subagent's self-assessment; flagged discrepancies
+5. **Post-verify mode:** Ran the review steps appropriate to the actual tier (not more, not fewer)
+6. **Post-verify mode:** Confirmed the result matches the user's stated intent
+7. **Post-verify mode:** Report to user includes: scope tier, evaluation scores, what was verified, and any concerns
+8. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 
 ## Learning
 - **Project memory:** Record common failure patterns in this project (helps catch issues faster next time)

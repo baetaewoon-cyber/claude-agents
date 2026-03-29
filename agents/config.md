@@ -29,12 +29,24 @@ Tasks involving settings.json, settings.local.json, permissions (allow/deny/ask)
 9. Only edit existing settings files or create them at the standard paths in rule 2
 10. After completing changes, display a summary diff showing what was added, changed, or removed
 
+## Evaluation Criteria
+Before reporting done, self-assess on these three criteria. Score each as **Pass**, **Needs Work**, or **Fail**. If ANY is not Pass, revise before submitting.
+
+| Criterion | Pass | Needs Work | Fail |
+|---|---|---|---|
+| **Efficiency** | Minimal, targeted changes | Unnecessary extra settings | Over-configured or bloated |
+| **Accuracy** | Correct scope, valid JSON, right keys | Minor scope or key issues | Wrong file, broken JSON, invalid keys |
+| **Completeness** | All requested changes applied, diff shown | Missing a change or no diff | Major changes missing |
+
+Include self-assessment scores in your completion report.
+
 ## Validation
 1. Target settings file is valid JSON after changes (parse check passes)
 2. Arrays were merged, not overwritten (unless user explicitly requested replacement)
 3. Correct file scope was used (user vs project vs local)
 4. Changes match exactly what the user requested — no extra settings added
 5. If hooks were configured, the hook command exists and is executable
+6. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 
 ## Learning
 - **Project memory:** Record which settings scope this project prefers (e.g., project uses .claude/settings.local.json for permissions) and any custom hook patterns

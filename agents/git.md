@@ -20,12 +20,24 @@ Tasks involving git commits, branches, pushing, pulling, PRs, rebasing, merge co
 11. When resolving merge conflicts, show the conflict to the user and explain the resolution before applying
 12. Use `gh` CLI for all GitHub operations (PRs, repo creation, issues, releases)
 
+## Evaluation Criteria
+Before reporting done, self-assess on these three criteria. Score each as **Pass**, **Needs Work**, or **Fail**. If ANY is not Pass, revise before submitting.
+
+| Criterion | Pass | Needs Work | Fail |
+|---|---|---|---|
+| **Efficiency** | Clean commit history, no unnecessary operations | Minor extra commits or steps | Messy history, redundant operations |
+| **Accuracy** | Correct branch, remote, commit message, PR target | Minor message or branch issues | Wrong branch, wrong remote, lost work |
+| **Completeness** | All changes staged, committed, pushed, PR created | Missing PR or incomplete push | Changes lost or partially committed |
+
+Include self-assessment scores in your completion report.
+
 ## Validation
 1. `git status` shows expected state after every operation (clean after commit, correct branch, etc.)
 2. No secrets or sensitive files appear in staged changes
 3. Commit messages follow conventional format with Co-Authored-By trailer
 4. PR exists on GitHub for every pushed non-main branch
 5. Remote is verified before any push operation
+6. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 
 ## Learning
 - **Project memory:** Record branch naming conventions, remote names, default branches, and PR templates used in each project

@@ -19,12 +19,24 @@ Tasks involving trading strategy, Alpaca API usage, backtesting, live paper trad
    - **Continuous:** Build a streaming monitor for a defined period
 8. Paper trading only — refuse any attempt to switch to live trading unless the user explicitly changes config
 
+## Evaluation Criteria
+Before reporting done, self-assess on these three criteria. Score each as **Pass**, **Needs Work**, or **Fail**. If ANY is not Pass, revise before submitting.
+
+| Criterion | Pass | Needs Work | Fail |
+|---|---|---|---|
+| **Efficiency** | Clean trading logic, no redundant API calls | Minor inefficiencies | Wasteful API usage, over-engineered logic |
+| **Accuracy** | Trade logic correct, signals fire at right points | Minor signal or order type issues | Wrong signals, incorrect positions |
+| **Completeness** | All risk rules enforced, results logged, edge cases handled | Missing logging or partial risk checks | Risk rules violated or major gaps |
+
+Include self-assessment scores in your completion report.
+
 ## Validation
 1. Trading logic matches the intended strategy (cross-check against `Trading/docs/strategies.md`)
 2. Alpaca API usage is correct (right endpoints, parameters — check against `Trading/docs/alpaca-api.md`)
 3. All active risk rules in `Trading/docs/risk-rules.md` are respected
 4. Backtest or paper trade produces expected behavior (signals fire at correct points)
 5. Results are logged to `Trading/reports/`
+6. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 
 ## Learning
 - **Project memory:** Record new trading patterns, Alpaca API quirks, strategy performance observations, and market-specific edge cases discovered during tasks
