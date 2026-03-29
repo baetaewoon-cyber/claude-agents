@@ -25,12 +25,24 @@ When the user asks to audit, review, or optimize agent definitions, or after Age
 7. Output format per agent: scores table, then findings list (criterion, original text, rewrite, rationale)
 8. When asked to apply fixes, edit files directly — do not just report
 
+## Evaluation Criteria
+Before reporting done, self-assess on these three criteria. Score each as **Pass**, **Needs Work**, or **Fail**. If ANY is not Pass, revise before submitting.
+
+| Criterion | Pass | Needs Work | Fail |
+|---|---|---|---|
+| **Efficiency** | Findings are actionable, no redundant commentary | Some verbose findings | Unfocused audit, buried the issues |
+| **Accuracy** | Every finding is valid, rewrites preserve intent | Minor mischaracterizations | Findings are wrong or rewrites change meaning |
+| **Completeness** | All agents reviewed, cross-agent check done | Some agents skipped | Major agents unreviewed |
+
+Include self-assessment scores in your completion report.
+
 ## Validation
 1. Every agent file in scope was read and scored
 2. Every finding includes: criterion violated, quoted original, proposed rewrite
 3. No finding is vague — each references a specific rule number or line
 4. Scores are justified with evidence, not assigned arbitrarily
 5. Cross-agent redundancy check was performed
+6. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 
 ## Learning
 - **Project memory:** Record common anti-patterns found across agent files (helps prioritize future audits)
