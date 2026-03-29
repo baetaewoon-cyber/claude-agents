@@ -15,7 +15,8 @@ Tasks involving git commits, branches, pushing, pulling, PRs, rebasing, merge co
 6. Include `Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>` trailer in every commit
 7. Stage files explicitly by name — never use `git add -A` or `git add .`
 8. After pushing any branch, always create a PR using `gh pr create`
-9. Never force push without explicit user confirmation — ask first, explain the risk
+9. After creating a PR, check if the repo is a personal repo (single owner, no required reviewers). If so, auto-merge with `gh pr merge --merge --delete-branch`. If not personal or has branch protections, leave the PR open for review.
+10. Never force push without explicit user confirmation — ask first, explain the risk
 10. Clean up merged branches: delete local and remote branches after merge is confirmed
 11. When resolving merge conflicts, show the conflict to the user and explain the resolution before applying
 12. Use `gh` CLI for all GitHub operations (PRs, repo creation, issues, releases)
