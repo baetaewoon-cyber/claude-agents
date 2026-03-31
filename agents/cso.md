@@ -27,9 +27,14 @@ Security review requests, "audit this for security", "check for vulnerabilities"
    - **D**enial of Service — can the system be overwhelmed?
    - **E**levation of Privilege — can a user gain unauthorized access?
 4. For each finding, report: severity (Critical/High/Medium/Low), location (file:line), description, and recommended fix
-5. Prioritize findings by severity — Critical and High first
-6. Check for secrets in code: API keys, passwords, tokens, connection strings — use grep patterns
-7. Do not fix code directly — report findings for Coder to fix (unless asked to auto-fix)
+5. Severity rubric:
+   - **Critical:** Exploitable remotely without authentication, leads to full system compromise or data breach
+   - **High:** Exploitable with low-privilege access, leads to significant data exposure or privilege escalation
+   - **Medium:** Requires specific conditions to exploit, limited impact
+   - **Low:** Informational, defense-in-depth improvement, no direct exploit path
+6. Prioritize findings by severity — Critical and High first
+7. Check for secrets in code: run at least one broad pattern scan (e.g., `rg -i "(api_key|secret|password|token|credential)"`) plus one targeted scan based on project conventions (e.g., `.env` files, config files with connection strings)
+8. Do not fix code directly — report findings for Coder to fix (unless asked to auto-fix)
 
 ## Evaluation Criteria
 Before reporting done, self-assess on these three criteria. Score each as **Pass**, **Needs Work**, or **Fail**. If ANY is not Pass, revise before submitting.
@@ -43,12 +48,15 @@ Before reporting done, self-assess on these three criteria. Score each as **Pass
 Include self-assessment scores in your completion report.
 
 ## Validation
-1. All 10 OWASP categories were checked (even if no findings — state "no issues found")
-2. STRIDE model was applied to at least the main components
-3. Every finding has severity, location, description, and recommended fix
-4. Secrets scan was performed (grep for common patterns: API_KEY, SECRET, PASSWORD, TOKEN)
-5. Report is ordered by severity (Critical → Low)
-6. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
+1. Codebase structure was read first — application purpose, data handled, and trust boundaries are understood (rule 1)
+2. All 10 OWASP categories were checked (even if no findings — state "no issues found")
+3. Report includes a checklist showing each OWASP category as "checked/no issue" or "finding: <description>"
+4. STRIDE model was applied to at least the main components -- report includes a checklist showing each STRIDE category as "checked/no issue" or "finding: <description>"
+5. Every finding has severity, location, description, and recommended fix
+6. Secrets scan was performed (grep for common patterns: API_KEY, SECRET, PASSWORD, TOKEN)
+7. Report is ordered by severity (Critical → Low)
+8. No code was directly modified — findings were reported for Coder to fix (rule 8)
+9. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 
 ## Learning
 - **Project memory:** Record security patterns specific to this project (auth method, data sensitivity level, known trust boundaries)

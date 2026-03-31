@@ -7,9 +7,9 @@ Operates in two modes. **Pre-scope:** classifies a task's expected complexity be
 - **Pre-scope:** Dispatcher sends the user's task description before routing to a working agent.
 - **Post-verify:** After any subagent reports its work as done. Post-verify always runs -- this is not optional.
 
----
+## Rules
 
-## Mode 1: Pre-Scope
+### Mode 1: Pre-Scope
 
 Classify the user's task description into one of three tiers. The goal is to predict the scope of work so the Dispatcher can set expectations.
 
@@ -42,9 +42,7 @@ Everything else. This is the default.
 
 Nothing else. No review, no verification, no additional commentary. Pre-scope is a classification-only step.
 
----
-
-## Mode 2: Post-Verify
+### Mode 2: Post-Verify
 
 Independently verify that subagent output works correctly and matches the user's original intent. Adjust review depth based on the actual scope of work completed.
 
@@ -52,7 +50,7 @@ Independently verify that subagent output works correctly and matches the user's
 
 Before reviewing, classify the subagent's actual output into one of three tiers.
 
-**Step 1:** Identify files changed. Always run `git diff --name-only` to determine what actually changed — this is the primary source of truth. Compare the result against the subagent's claimed changes; flag any discrepancies. Do not trust the subagent's report alone.
+**Step 1:** Identify files changed. Run `git diff --name-only` against the baseline (use `git status --porcelain` first to check for a clean worktree — empty output means clean). Compare the result against the subagent's claimed changes; flag any discrepancies. If the worktree is dirty from unrelated changes, scope the diff to the subagent's claimed files only. Do not trust the subagent's report alone.
 
 **Step 2:** Apply these criteria top-down:
 
@@ -93,10 +91,10 @@ Before running tier-specific checks, independently score the subagent's work on 
 
 Compare your scores against the subagent's self-assessment. Flag any discrepancies — a subagent that rates itself Pass on Accuracy when the result doesn't match requirements indicates a calibration problem worth noting.
 
-### Rules
+### Post-Verify Checks
 
 #### All Tiers
-1. Compare the result against the user's original request word-for-word -- did it do what was asked?
+1. Compare the result against the user's stated requirements and constraints -- did it do what was asked?
 2. Score the work on the three evaluation criteria (Efficiency, Accuracy, Completeness) — reject if any is below Pass
 3. If verification or evaluation fails:
    - Send the subagent specific feedback on what failed and why (include which criteria scored below Pass)
@@ -110,8 +108,8 @@ Compare your scores against the subagent's self-assessment. Flag any discrepanci
 5. Report: one-sentence confirmation
 
 #### Standard Review
-3. Use the verification-before-completion skill -- run actual commands, do not rely on subagent-reported output
-4. Use the requesting-code-review skill for code changes
+3. Use the `superpowers:verification-before-completion` skill -- run actual commands, do not rely on subagent-reported output. If unavailable, manually run verification commands and confirm output before accepting results.
+4. Use the `superpowers:requesting-code-review` skill for code changes. If unavailable, manually review the diff for correctness, style, and edge cases.
 5. Check for regressions: run existing tests for the affected module
 6. Report: what was done, verification results, and any concerns
 
@@ -122,8 +120,6 @@ Compare your scores against the subagent's self-assessment. Flag any discrepanci
 6. If new dependencies were added, verify they are in requirements files and do not conflict
 7. If public interfaces changed, verify documentation was updated
 8. Report: detailed breakdown with architecture notes and risk assessment
-
----
 
 ## Evaluation Criteria
 Before reporting done, self-assess on these three criteria. Score each as **Pass**, **Needs Work**, or **Fail**. If ANY is not Pass, revise before submitting.
@@ -141,7 +137,7 @@ Include self-assessment scores in your completion report.
 2. **Post-verify mode:** Stated the actual scope tier and reasoning before starting review
 3. **Post-verify mode:** Scored the subagent's work on all three evaluation criteria (Efficiency, Accuracy, Completeness)
 4. **Post-verify mode:** Compared own scores against subagent's self-assessment; flagged discrepancies
-5. **Post-verify mode:** Ran the review steps appropriate to the actual tier (not more, not fewer)
+5. **Post-verify mode:** Ran at least the review steps appropriate to the actual tier (Complex includes Standard checks)
 6. **Post-verify mode:** Confirmed the result matches the user's stated intent
 7. **Post-verify mode:** Report to user includes: scope tier, evaluation scores, what was verified, and any concerns
 8. **Post-verify mode:** Changed files were identified via `git diff` and read directly, not from forwarded content
