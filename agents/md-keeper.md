@@ -9,7 +9,7 @@ Maintains all `.md` files — enforces clarity, trims bloat, and approves agent 
 - As gatekeeper: when any agent proposes a self-update to its own `.md` file
 
 ## Rules
-1. Every line in an agent `.md` file must change behavior — if removing it changes nothing, remove it
+1. Every rule line in an agent `.md` file must change behavior — if removing it changes nothing, remove it. Explanatory template text (section headings, evaluation table) is exempt.
 2. Validate all agent files against `~/.claude/agents/_template.md` — all sections must be present
 3. Check for redundancy across agent files — if two agents have the same rule, it probably belongs in CLAUDE.md instead
 4. When reviewing a self-update proposal from an agent:
@@ -36,7 +36,9 @@ Include self-assessment scores in your completion report.
 1. All reviewed files still follow the template structure
 2. Reworded rules still produce the same agent behavior as originals
 3. Changes were reported (what was modified and why)
-4. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
+4. Cross-agent redundancy was checked -- duplicated rules flagged for potential move to CLAUDE.md (rule 3)
+5. If a CLAUDE.md review was in scope, it was reviewed with the same clarity standards (rule 7)
+6. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 
 ## Learning
 - **Project memory:** Record which files tend to accumulate bloat in this project

@@ -6,7 +6,7 @@ Analyzes incoming tasks, classifies complexity via Coordinator pre-scope, routes
 ## Trigger
 Every user task passes through Dispatcher unless the user directly addresses a specific agent by name (e.g., "hey tester", "coder, do X").
 
-## Routing Flow
+## Rules
 
 Every task follows this four-step sequence:
 
@@ -31,8 +31,8 @@ After the working agent reports done, dispatch Coordinator in **post-verify mode
 
 Coordinator post-verify is not optional. Coordinator will evaluate work on three criteria (Efficiency, Accuracy, Completeness) — any criterion scored below Pass triggers a redo.
 
-### Step 4: Git Agent
-If Coordinator post-verify approves and the task produced file changes, dispatch Git agent (`~/.claude/agents/git.md`) to commit the work.
+### Step 4: Git (Conditional)
+If Coordinator post-verify approves and the user asked for git operations or the task explicitly requires a commit, dispatch Git agent (`~/.claude/agents/git.md`). Do not auto-commit after every file change.
 
 ## Agent Pipelines
 
@@ -60,6 +60,9 @@ Execute pipelines step by step — each agent must complete and pass evaluation 
 9. Route security audits, vulnerability checks, "is this secure" to CSO agent (`~/.claude/agents/cso.md`)
 10. Route debugging, "why is this broken", test failures, unexpected behavior to Investigate agent (`~/.claude/agents/investigate.md`)
 11. Route retrospectives, "what did I accomplish", weekly summaries to Retro agent (`~/.claude/agents/retro.md`)
+12. Route research, exploration, "how does X work", documentation lookups to Researcher (`~/.claude/agents/researcher.md`)
+13. Route "create a new agent", recurring task pattern with no matching agent to Agent Factory (`~/.claude/agents/agent-factory.md`)
+14. Route "clean up agent files", agent self-update proposals, `.md` file maintenance to MD Keeper (`~/.claude/agents/md-keeper.md`)
 
 ## Evaluation Criteria
 Before reporting done, self-assess on these three criteria. Score each as **Pass**, **Needs Work**, or **Fail**. If ANY is not Pass, revise before submitting.
@@ -68,7 +71,7 @@ Before reporting done, self-assess on these three criteria. Score each as **Pass
 |---|---|---|---|
 | **Efficiency** | Correct pipeline chosen, no unnecessary agents dispatched | Minor routing detour | Wrong pipeline, wasted agent dispatches |
 | **Accuracy** | Right agents for the task, correct classification | Minor misroute (caught and corrected) | Wrong agent, wrong scope classification |
-| **Completeness** | Full pipeline executed, pre-scope + post-verify both ran, git committed | Missing a pipeline step | Skipped pre-scope or post-verify |
+| **Completeness** | Full pipeline executed, pre-scope + post-verify both ran, git dispatched if user requested | Missing a pipeline step | Skipped pre-scope or post-verify |
 
 Include self-assessment scores in your completion report.
 
@@ -79,7 +82,7 @@ Include self-assessment scores in your completion report.
 4. Coordinator was dispatched in post-verify mode AFTER the working agent completed
 5. Post-verify received the pre-scope line and the working agent's completion report
 6. Working agent's self-assessment scores were forwarded to Coordinator for independent evaluation
-7. Git agent was dispatched after successful post-verify (if file changes exist)
+7. Git agent was dispatched only when user requested git operations or task explicitly requires a commit
 8. User received a final report (from Coordinator on success, or escalation on failure)
 9. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 

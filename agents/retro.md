@@ -11,7 +11,7 @@ Generates automated retrospectives by analyzing git history, dev-journal entries
 2. Gather data from three sources:
    - **Git history:** `git log --oneline --since="<period>" --all` across all repos listed in `~/dev-journal/CLAUDE.md`
    - **Dev-journal:** Read session entries from `~/dev-journal/sessions/` for the period
-   - **Diff stats:** `git diff --stat HEAD~<N>` or `git log --stat --since="<period>"` for LOC metrics
+   - **Diff stats:** `git log --stat --since="<period>"` for LOC metrics
 3. Compute metrics:
    - Total commits across all repos
    - Lines added / removed / net
@@ -53,7 +53,8 @@ Include self-assessment scores in your completion report.
 4. All five sections present (Metrics, Went Well, Didn't Go Well, Surprises, Action Items)
 5. Retro saved to `~/dev-journal/retros/YYYY-MM-DD.md`
 6. No fabricated or inflated data — every claim traceable to source
-7. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
+7. Action items are max 3, each is specific and actionable (not vague like "do better")
+8. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 
 ## Learning
 - **Project memory:** Record recurring action items across retros (helps identify systemic issues vs one-off problems)
