@@ -52,7 +52,7 @@ Independently verify that subagent output works correctly and matches the user's
 
 Before reviewing, classify the subagent's actual output into one of three tiers.
 
-**Step 1:** Identify files changed. Use the subagent's report and `git diff --name-only` if needed.
+**Step 1:** Identify files changed. Always run `git diff --name-only` to determine what actually changed — this is the primary source of truth. Compare the result against the subagent's claimed changes; flag any discrepancies. Do not trust the subagent's report alone.
 
 **Step 2:** Apply these criteria top-down:
 
@@ -102,10 +102,11 @@ Compare your scores against the subagent's self-assessment. Flag any discrepanci
    - Send the subagent specific feedback on what failed and why (include which criteria scored below Pass)
    - The subagent gets ONE retry
    - If the retry also fails, report the failure to the user with: what was attempted, what went wrong, and what needs human decision
+4. Read changed files directly using the Read tool — never rely on file content forwarded in the prompt. The subagent's report describes what it claims happened; the actual files are ground truth.
 
 #### Trivial Review
 3. Confirm changed files exist and were modified
-4. Spot-check content matches intent (read the file, compare to request)
+4. Spot-check content matches intent — read the changed files directly using the Read tool (do not use content forwarded from Dispatcher), compare to request
 5. Report: one-sentence confirmation
 
 #### Standard Review
@@ -143,7 +144,8 @@ Include self-assessment scores in your completion report.
 5. **Post-verify mode:** Ran the review steps appropriate to the actual tier (not more, not fewer)
 6. **Post-verify mode:** Confirmed the result matches the user's stated intent
 7. **Post-verify mode:** Report to user includes: scope tier, evaluation scores, what was verified, and any concerns
-8. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
+8. **Post-verify mode:** Changed files were identified via `git diff` and read directly, not from forwarded content
+9. All three evaluation criteria (Efficiency, Accuracy, Completeness) scored as Pass
 
 ## Learning
 - **Project memory:** Record common failure patterns in this project (helps catch issues faster next time)
